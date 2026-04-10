@@ -1,0 +1,171 @@
+.rapports-page {
+  padding: 28px 32px;
+  flex: 1;
+}
+
+.rapports-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 28px;
+}
+
+.rapports-header h1 {
+  font-size: 28px;
+  font-weight: 800;
+  color: #1a1a2e;
+  margin-bottom: 6px;
+}
+
+.rapports-header p {
+  font-size: 14px;
+  color: #888;
+}
+
+.generate-report-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border-radius: 10px;
+  border: none;
+  background: #6c5ce7;
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.2s;
+}
+
+.generate-report-btn:hover {
+  background: #5a4bd1;
+  box-shadow: 0 4px 12px rgba(108, 92, 231, 0.3);
+}
+
+.rapports-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.rapport-stat {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: white;
+  border-radius: 14px;
+  padding: 20px;
+  border: 1px solid #e8e8ef;
+}
+
+.rapport-stat-val {
+  display: block;
+  font-size: 24px;
+  font-weight: 800;
+  color: #1a1a2e;
+}
+
+.rapport-stat-label {
+  font-size: 13px;
+  color: #888;
+}
+
+.rapports-table {
+  background: white;
+  border-radius: 16px;
+  border: 1px solid #e8e8ef;
+  overflow: hidden;
+}
+
+.rapports-table-header {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 80px;
+  padding: 14px 24px;
+  background: #f8f8fa;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: #888;
+  text-transform: uppercase;
+}
+
+.rapport-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 80px;
+  padding: 16px 24px;
+  align-items: center;
+  border-bottom: 1px solid #f0f0f5;
+  transition: background 0.2s;
+}
+
+.rapport-row:hover {
+  background: #f8f8fa;
+}
+
+.rapport-row:last-child {
+  border-bottom: none;
+}
+
+.rapport-name {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1a1a2e;
+}
+
+.rapport-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: #f8f7ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rapport-date {
+  font-size: 13px;
+  color: #888;
+}
+
+.rapport-type {
+  font-size: 13px;
+  color: #666;
+}
+
+.rapport-status {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.rapport-status.done {
+  color: #27ae60;
+}
+
+.rapport-status.pending {
+  color: #f59e0b;
+}
+
+.rapport-download-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  border: 1px solid #e8e8ef;
+  background: white;
+  color: #666;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.rapport-download-btn:hover {
+  background: #6c5ce7;
+  color: white;
+  border-color: #6c5ce7;
+}

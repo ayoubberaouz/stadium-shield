@@ -1,0 +1,83 @@
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import {
+  LayoutDashboard,
+  Eye,
+  Map,
+  Camera,
+  Radio,
+  Bell,
+  AlertTriangle,
+  FileText,
+  Settings,
+  Shield
+} from 'lucide-react';
+import './Sidebar.css';
+
+const menuItems = [
+  { id: 'dashboard', label: 'Tableau de bord', icon: LayoutDashboard, path: '/dashboard' },
+  { id: 'surveillance', label: 'Surveillance', icon: Eye, path: '/surveillance' },
+  { id: 'zones', label: 'Zones', icon: Map, path: '/zones' },
+  { id: 'cameras', label: 'Caméras', icon: Camera, path: '/cameras' },
+  { id: 'capteurs', label: 'Capteurs', icon: Radio, path: '/capteurs' },
+  { id: 'alertes', label: 'Alertes', icon: Bell, path: '/alertes' },
+  { id: 'urgence', label: 'Urgence', icon: AlertTriangle, path: '/urgence' },
+  { id: 'rapports', label: 'Rapports', icon: FileText, path: '/rapports' },
+];
+
+function Sidebar({ activeTab }) {
+  const navigate = useNavigate();
+
+  return (
+    <aside className="sidebar">
+      <div className="sidebar-header">
+        <div className="logo">
+          <div className="logo-icon">
+            <Shield size={24} />
+          </div>
+          <div className="logo-text">
+            <h1>StadiumShield</h1>
+            <p>Safety Control Center</p>
+          </div>
+        </div>
+      </div>
+
+      <nav className="sidebar-nav">
+        {menuItems.map((item) => {
+          const Icon = item.icon;
+          return (
+            <button
+              key={item.id}
+              className={`nav-item ${activeTab === item.id ? 'active' : ''}`}
+              onClick={() => navigate(item.path)}
+            >
+              <Icon size={20} />
+              <span>{item.label}</span>
+            </button>
+          );
+        })}
+      </nav>
+
+      <div className="sidebar-footer">
+        <button className="nav-item settings-btn">
+          <Settings size={20} />
+          <span>Paramètres</span>
+        </button>
+        <div className="user-profile">
+          <div className="user-avatar">
+            <img
+              src="https://ui-avatars.com/api/?name=Admin&background=6c5ce7&color=fff&size=40"
+              alt="Admin"
+            />
+          </div>
+          <div className="user-info">
+            <span className="user-name">Name_Admin</span>
+            <span className="user-role">Admin Principal</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+  );
+}
+
+export default Sidebar;
