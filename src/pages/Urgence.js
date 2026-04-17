@@ -1,94 +1,132 @@
-import React from 'react';
-import { AlertTriangle, Phone, Shield, Users, Siren, MapPin, Radio, Clock } from 'lucide-react';
+import React, { useState } from 'react';
+import { AlertTriangle, Phone, Shield, Users, Siren, MapPin, Radio, Clock, Bell, Lock, LogOut, Eye } from 'lucide-react';
 import './Urgence.css';
 
-const protocols = [
-  { id: 1, name: 'Évacuation Générale', level: 'NIVEAU 3', color: '#e74c3c', icon: Siren, desc: 'Évacuation complète du stade via toutes les sorties.' },
-  { id: 2, name: 'Évacuation Partielle', level: 'NIVEAU 2', color: '#f59e0b', icon: MapPin, desc: 'Évacuation ciblée de zones spécifiques.' },
-  { id: 3, name: 'Confinement', level: 'NIVEAU 1', color: '#3b82f6', icon: Shield, desc: 'Confinement sur place - verrouillage des accès.' },
-  { id: 4, name: 'Alerte Médicale', level: 'URGENCE', color: '#e74c3c', icon: Phone, desc: 'Déploiement des équipes médicales d\'urgence.' },
+const zones = [
+  { id: 1, name: 'ZONE 1', status: 'SÉCURISÉ', statusColor: '#27ae60', isCritical: false },
+  { id: 2, name: 'ZONE 2', status: 'SÉCURISÉ', statusColor: '#27ae60', isCritical: false },
+  { id: 3, name: 'ZONE 3', status: 'SÉCURISÉ', statusColor: '#27ae60', isCritical: false },
+  { id: 4, name: 'ZONE 4', status: 'SÉCURISÉ', statusColor: '#27ae60', isCritical: false },
+  { id: 5, name: 'ZONE 5', status: 'DANGER', statusColor: '#e74c3c', isCritical: true, temp: '450°C' },
+  { id: 6, name: 'ZONE 6', status: 'SÉCURISÉ', statusColor: '#27ae60', isCritical: false },
+  { id: 7, name: 'ZONE 7', status: 'SÉCURISÉ', statusColor: '#27ae60', isCritical: false },
+  { id: 8, name: 'ZONE 8', status: 'SÉCURISÉ', statusColor: '#27ae60', isCritical: false },
 ];
 
-const teams = [
-  { name: 'Équipe Alpha', zone: 'Zone 1-2', status: 'En position', statusColor: '#27ae60', members: 8 },
-  { name: 'Équipe Bravo', zone: 'Zone 3-4', status: 'En déplacement', statusColor: '#f59e0b', members: 6 },
-  { name: 'Équipe Charlie', zone: 'Zone 5-6', status: 'En intervention', statusColor: '#e74c3c', members: 10 },
-  { name: 'Équipe Delta', zone: 'Zone 7-8', status: 'En position', statusColor: '#27ae60', members: 7 },
+const emergencyActions = [
+  { id: 1, title: 'Évacuer la zone', color: '#e74c3c', icon: '🚪' },
+  { id: 2, title: 'Activer l\'alarme', color: '#f59e0b', icon: '🔔' },
+  { id: 3, title: 'Verrouiller les portes', color: '#1a1a2e', icon: '🔐' },
+  { id: 4, title: 'Ouvrir les sorties de secours', color: '#888', icon: '📂' },
+  { id: 5, title: 'Appeler la sécurité', color: '#6c5ce7', icon: '🛡️' },
+  { id: 6, title: 'Appeler la police', color: '#3b82f6', icon: '👮' },
+];
+
+const activityLog = [
+  { id: 1, action: 'Séquence d\'évacuation initiée', time: 'Aujourd\'hui 14:23 • Système Réel', icon: Phone, color: '#27ae60' },
+  { id: 2, action: 'Équipes de sécurité Alpha & Beta déployées', time: 'Aujourd\'hui 14:23 • Admin Niveau', icon: Users, color: '#6c5ce7' },
+  { id: 3, action: 'Alarme incendie déclenchée manuellement', time: 'Aujourd\'hui 14:19 • Neuil', icon: Bell, color: '#e74c3c' },
+  { id: 4, action: 'Capteurs en ligne - Zones 1-8 Contrôlés', time: 'Aujourd\'hui 14:00 • Contrôle Global', icon: Radio, color: '#999' },
 ];
 
 function Urgence() {
+  const [acknowledged, setAcknowledged] = useState(false);
+
   return (
     <div className="urgence-page">
-      <div className="urgence-header">
-        <div>
-          <h1>Centre d'Urgence</h1>
-          <p>Protocoles d'urgence et coordination des équipes de sécurité.</p>
+      {/* Critical Alert Banner */}
+      <div className="urgence-critical-alert">
+        <div className="alert-content">
+          <AlertTriangle size={28} color="#e74c3c" />
+          <div className="alert-text">
+            <h2>ALERTE CRITIQUE: Feu détecté en Zone 5</h2>
+            <p>Action immédiate requise. Les capteurs thermiques signalent des températures > 450°C.</p>
+          </div>
         </div>
-        <button className="urgence-panic-btn">
-          <AlertTriangle size={18} />
-          ACTIVER PROTOCOLE D'URGENCE
+        <button className="alert-acknowledge-btn" onClick={() => setAcknowledged(!acknowledged)}>
+          ACCUSER RÉCEPTION
         </button>
       </div>
 
-      <div className="urgence-status-bar">
-        <div className="urgence-status-item">
-          <Clock size={16} />
-          <span>Dernière vérification : il y a 2 min</span>
-        </div>
-        <div className="urgence-status-item">
-          <Radio size={16} />
-          <span>Communications : Opérationnelles</span>
-        </div>
-        <div className="urgence-status-item ok">
-          <Shield size={16} />
-          <span>Statut : Normal</span>
-        </div>
-      </div>
-
-      <div className="urgence-grid">
-        <div className="urgence-protocols">
-          <h2>Protocoles d'Urgence</h2>
-          <div className="protocols-list">
-            {protocols.map((p) => {
-              const Icon = p.icon;
-              return (
-                <div key={p.id} className="protocol-card">
-                  <div className="protocol-icon" style={{ background: `${p.color}15`, color: p.color }}>
-                    <Icon size={22} />
-                  </div>
-                  <div className="protocol-info">
-                    <div className="protocol-title-row">
-                      <strong>{p.name}</strong>
-                      <span className="protocol-level" style={{ color: p.color, borderColor: p.color }}>{p.level}</span>
-                    </div>
-                    <p>{p.desc}</p>
-                  </div>
-                  <button className="protocol-activate-btn" style={{ borderColor: p.color, color: p.color }}>Activer</button>
-                </div>
-              );
-            })}
+      {/* Surveillance des Zones */}
+      <div className="urgence-surveillance">
+        <div className="surveillance-main">
+          <div className="surveillance-header">
+            <h2>Surveillance des Zones du Stade</h2>
+            <span className="zone-count">8 Zones au total • 1 D'risque</span>
           </div>
-        </div>
 
-        <div className="urgence-teams">
-          <h2>Équipes de Sécurité</h2>
-          <div className="teams-list">
-            {teams.map((t, i) => (
-              <div key={i} className="team-card">
-                <div className="team-header">
-                  <strong>{t.name}</strong>
-                  <span className="team-status" style={{ color: t.statusColor }}>
-                    <span className="team-status-dot" style={{ background: t.statusColor }}></span>
-                    {t.status}
-                  </span>
-                </div>
-                <div className="team-details">
-                  <span><MapPin size={14} /> {t.zone}</span>
-                  <span><Users size={14} /> {t.members} membres</span>
-                </div>
+          <div className="zones-grid">
+            {zones.map((zone) => (
+              <div key={zone.id} className={`zone-card ${zone.isCritical ? 'critical' : ''}`}>
+                <div className="zone-card-indicator" style={{ background: zone.statusColor }}></div>
+                <h4>{zone.name}</h4>
+                <p className="zone-status" style={{ color: zone.statusColor }}>{zone.status}</p>
+                {zone.temp && <p className="zone-temp">{zone.temp}</p>}
               </div>
             ))}
           </div>
+        </div>
+
+        <div className="thermal-map-card">
+          <div className="thermal-header">
+            <h3>EN DIRECT • ZONE THERMIQUE 5</h3>
+            <span className="thermal-subtitle">Intégrée d'architecture • ATTENTION PÉRIL!</span>
+          </div>
+          <div className="thermal-image">
+            <div className="thermal-content">
+              <span className="temp-display">450°C</span>
+              <span className="thermal-label">Température infrarouge</span>
+              <span className="thermal-status">⚠ ATTENTION PÉRIL!</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Emergency Actions */}
+      <div className="urgence-actions">
+        <div className="actions-header">
+          <div>
+            <h2>Actions d'urgence - Zone 5</h2>
+            <p>Protocole d'évacuation ciblé et déploiement de sécurité.</p>
+          </div>
+          <div className="urgence-severity">
+            <AlertTriangle size={16} />
+            <span>HAUTE PRIORITÉ</span>
+          </div>
+        </div>
+
+        <div className="actions-grid">
+          {emergencyActions.map((action) => (
+            <button key={action.id} className={`action-btn ${action.id === 1 ? 'primary' : ''}`} style={{ borderColor: action.color, color: action.id === 1 ? 'white' : action.color, background: action.id === 1 ? action.color : 'transparent' }}>
+              <div className="action-icon">{action.icon}</div>
+              <span>{action.title}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Activity Log */}
+      <div className="urgence-activity">
+        <div className="activity-header">
+          <h3>L'Journal d'activité</h3>
+          <a href="#" className="view-all">Voir les journaux système complets</a>
+        </div>
+        <div className="activity-list">
+          {activityLog.map((log) => {
+            const Icon = log.icon;
+            return (
+              <div key={log.id} className="activity-item">
+                <div className="activity-icon" style={{ background: `${log.color}15` }}>
+                  <Icon size={18} style={{ color: log.color }} />
+                </div>
+                <div className="activity-content">
+                  <p className="activity-action">{log.action}</p>
+                  <p className="activity-time">{log.time}</p>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>

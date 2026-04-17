@@ -11,6 +11,7 @@ import Capteurs from './pages/Capteurs';
 import Alertes from './pages/Alertes';
 import Urgence from './pages/Urgence';
 import Rapports from './pages/Rapports';
+import Parametres from './pages/Parametres';
 import './App.css';
 
 function AppLayout() {
@@ -26,6 +27,7 @@ function AppLayout() {
     '/alertes': 'alertes',
     '/urgence': 'urgence',
     '/rapports': 'rapports',
+    '/parametres': 'parametres',
   };
 
   const activeTab = pathToTab[location.pathname] || 'dashboard';
@@ -44,6 +46,7 @@ function AppLayout() {
           <Route path="/alertes" element={<Alertes />} />
           <Route path="/urgence" element={<Urgence />} />
           <Route path="/rapports" element={<Rapports />} />
+          <Route path="/parametres" element={<Parametres />} />
           <Route path="*" element={<Navigate to="/dashboard" replace />} />
         </Routes>
       </div>
