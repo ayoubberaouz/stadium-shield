@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Settings, Lock, Bell, Camera, Radio, Grid3X3, CheckCircle, AlertCircle, Eye, EyeOff, Shield } from 'lucide-react';
+import { Settings, Bell, Camera, Radio, Grid3X3, CheckCircle, Eye, EyeOff, Shield } from 'lucide-react';
 import './Parametres.css';
 
 function Parametres() {

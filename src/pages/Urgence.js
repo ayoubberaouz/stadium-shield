@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AlertTriangle, Phone, Shield, Users, Siren, MapPin, Radio, Clock, Bell, Lock, LogOut, Eye } from 'lucide-react';
+import { AlertTriangle, Phone, Users, Radio, Bell } from 'lucide-react';
 import './Urgence.css';
 
 const zones = [
@@ -110,7 +110,7 @@ function Urgence() {
       <div className="urgence-activity">
         <div className="activity-header">
           <h3>L'Journal d'activité</h3>
-          <a href="#" className="view-all">Voir les journaux système complets</a>
+          <button type="button" className="view-all">Voir les journaux système complets</button>
         </div>
         <div className="activity-list">
           {activityLog.map((log) => {

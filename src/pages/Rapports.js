@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Calendar, MapPin, AlertTriangle, Eye, Clock, Zap, TrendingUp, Download } from 'lucide-react';
+import { Calendar, MapPin, AlertTriangle } from 'lucide-react';
 import './Rapports.css';
 
 const statsData = [
@@ -154,7 +154,7 @@ function Rapports() {
         <div className="rapport-zone-chart">
           <div className="section-header">
             <h3>Personnes par Zone</h3>
-            <a href="#" className="rapport-link">Rapport complet</a>
+            <button type="button" className="rapport-link">Rapport complet</button>
           </div>
           <div className="horizontal-bars">
             {zoneData.map((zone, idx) => (
@@ -222,9 +222,9 @@ function Rapports() {
       <div className="rapport-footer">
         <p>© 2026 StadiumShield. Tous droits réservés.</p>
         <div className="footer-links">
-          <a href="#">Politique de confidentialité</a>
-          <a href="#">Documentation API</a>
-          <a href="#">Statut du système</a>
+          <a href="/privacy">Politique de confidentialité</a>
+          <a href="/api-docs">Documentation API</a>
+          <a href="/status">Statut du système</a>
         </div>
       </div>
     </div>
