@@ -154,7 +154,7 @@ function Rapports() {
         <div className="rapport-zone-chart">
           <div className="section-header">
             <h3>Personnes par Zone</h3>
-            <a href="javascript:void(0);" className="rapport-link">Rapport complet</a>
+            <button className="rapport-link" type="button">Rapport complet</button>
           </div>
           <div className="horizontal-bars">
             {zoneData.map((zone, idx) => (
@@ -222,9 +222,9 @@ function Rapports() {
       <div className="rapport-footer">
         <p>© 2026 StadiumShield. Tous droits réservés.</p>
         <div className="footer-links">
-          <a href="javascript:void(0);">Politique de confidentialité</a>
-          <a href="javascript:void(0);">Documentation API</a>
-          <a href="javascript:void(0);">Statut du système</a>
+          <button type="button">Politique de confidentialité</button>
+          <button type="button">Documentation API</button>
+          <button type="button">Statut du système</button>
         </div>
       </div>
     </div>

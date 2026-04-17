@@ -110,7 +110,7 @@ function Urgence() {
       <div className="urgence-activity">
         <div className="activity-header">
           <h3>L'Journal d'activité</h3>
-          <a href="javascript:void(0);" className="view-all">Voir les journaux système complets</a>
+          <button type="button" className="view-all">Voir les journaux système complets</button>
         </div>
         <div className="activity-list">
           {activityLog.map((log) => {

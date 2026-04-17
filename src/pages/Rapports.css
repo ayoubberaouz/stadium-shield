@@ -318,6 +318,11 @@
   color: #6c5ce7;
   text-decoration: none;
   font-weight: 600;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-family: inherit;
 }
 
 .rapport-link:hover {
@@ -507,13 +512,19 @@
   gap: 20px;
 }
 
-.footer-links a {
+.footer-links button {
   color: #666;
   text-decoration: none;
   transition: color 0.2s;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-family: inherit;
+  font-size: inherit;
 }
 
-.footer-links a:hover {
+.footer-links button:hover {
   color: #6c5ce7;
 }
 
