@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/stadium-shield/static/css/main.c21b85f8.css",
+    "main.js": "/stadium-shield/static/js/main.712886a3.js",
+    "static/js/453.bd160ce0.chunk.js": "/stadium-shield/static/js/453.bd160ce0.chunk.js",
+    "index.html": "/stadium-shield/index.html",
+    "main.c21b85f8.css.map": "/stadium-shield/static/css/main.c21b85f8.css.map",
+    "main.712886a3.js.map": "/stadium-shield/static/js/main.712886a3.js.map",
+    "453.bd160ce0.chunk.js.map": "/stadium-shield/static/js/453.bd160ce0.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.c21b85f8.css",
+    "static/js/main.712886a3.js"
+  ]
+}
