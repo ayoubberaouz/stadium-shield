@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Grid3X3, List, Filter, X, Search as SearchIcon, Wifi, Eye, ZoomIn, ZoomOut, Circle, Maximize2, AlertTriangle, Zap } from 'lucide-react';
+import { Grid3X3, List, Filter, X, Wifi, ZoomIn, ZoomOut, Circle, Maximize2 } from 'lucide-react';
 import './Cameras.css';
 
 const camerasData = [

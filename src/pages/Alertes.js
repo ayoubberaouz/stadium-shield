@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Bell, AlertTriangle, CheckCircle, Clock, Filter, Zap, AlertCircle, Info, Eye, Zap as ZapIcon } from 'lucide-react';
+import { AlertTriangle, Clock, Filter, AlertCircle, Eye } from 'lucide-react';
 import './Alertes.css';
 
 const alertsData = [
@@ -39,7 +39,6 @@ const zoneAnalysisCards = [
 ];
 
 function Alertes() {
-  const [currentPage, setCurrentPage] = useState(1);
   const criticalCount = '03';
   const investigationCount = '14';
 
