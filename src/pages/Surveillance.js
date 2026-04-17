@@ -9,17 +9,6 @@ const statsCards = [
   { label: 'ALERTES ACTIVES', value: '3', subtitle: 'Nécessite une Attention Immédiate', icon: AlertTriangle, color: '#e74c3c', isAlert: true },
 ];
 
-const zones = [
-  { id: 1, label: 'ZONE 1', status: 'SÛR', color: '#27ae60' },
-  { id: 2, label: 'ZONE 2', status: 'SÛR', color: '#27ae60' },
-  { id: 3, label: 'ZONE 3', status: 'SÛR', color: '#27ae60' },
-  { id: 4, label: 'ZONE 4', status: 'SÛR', color: '#27ae60' },
-  { id: 5, label: 'ZONE 5', status: 'CRITIQUE', color: '#e74c3c' },
-  { id: 6, label: 'ZONE 6', status: 'SÛR', color: '#27ae60' },
-  { id: 7, label: 'ZONE 7', status: 'AVERTISSEMENT', color: '#f59e0b' },
-  { id: 8, label: 'ZONE 8', status: 'SÛR', color: '#27ae60' },
-];
-
 const zoneDetails = [
   {
     name: 'Zone 1',
