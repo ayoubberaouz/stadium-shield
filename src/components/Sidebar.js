@@ -59,7 +59,7 @@ function Sidebar({ activeTab }) {
       </nav>
 
       <div className="sidebar-footer">
-        <button className="nav-item settings-btn">
+        <button className={`nav-item settings-btn ${activeTab === 'parametres' ? 'active' : ''}`} onClick={() => navigate('/parametres')}>
           <Settings size={20} />
           <span>Paramètres</span>
         </button>
