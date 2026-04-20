@@ -10,7 +10,8 @@ import {
   AlertTriangle,
   FileText,
   Settings,
-  Shield
+  Shield,
+  X
 } from 'lucide-react';
 import './Sidebar.css';
 
@@ -25,58 +26,70 @@ const menuItems = [
   { id: 'rapports', label: 'Rapports', icon: FileText, path: '/rapports' },
 ];
 
-function Sidebar({ activeTab }) {
+function Sidebar({ activeTab, isOpen, onClose }) {
   const navigate = useNavigate();
 
+  const handleNavClick = (path) => {
+    navigate(path);
+    onClose(); // Close sidebar on mobile after navigation
+  };
+
   return (
-    <aside className="sidebar">
-      <div className="sidebar-header">
-        <div className="logo">
-          <div className="logo-icon">
-            <Shield size={24} />
+    <>
+      {/* Overlay for mobile */}
+      {isOpen && <div className="sidebar-overlay" onClick={onClose}></div>}
+      <aside className={`sidebar ${isOpen ? 'open' : ''}`}>
+        <div className="sidebar-header">
+          <div className="logo">
+            <div className="logo-icon">
+              <Shield size={24} />
+            </div>
+            <div className="logo-text">
+              <h1>StadiumShield</h1>
+              <p>Safety Control Center</p>
+            </div>
           </div>
-          <div className="logo-text">
-            <h1>StadiumShield</h1>
-            <p>Safety Control Center</p>
+          <button className="sidebar-close" onClick={onClose}>
+            <X size={20} />
+          </button>
+        </div>
+
+        <nav className="sidebar-nav">
+          {menuItems.map((item) => {
+            const Icon = item.icon;
+            return (
+              <button
+                key={item.id}
+                className={`nav-item ${activeTab === item.id ? 'active' : ''}`}
+                onClick={() => handleNavClick(item.path)}
+              >
+                <Icon size={20} />
+                <span>{item.label}</span>
+              </button>
+            );
+          })}
+        </nav>
+
+        <div className="sidebar-footer">
+          <button className={`nav-item settings-btn ${activeTab === 'parametres' ? 'active' : ''}`} onClick={() => handleNavClick('/parametres')}>
+            <Settings size={20} />
+            <span>Paramètres</span>
+          </button>
+          <div className="user-profile">
+            <div className="user-avatar">
+              <img
+                src="https://ui-avatars.com/api/?name=Admin&background=6c5ce7&color=fff&size=40"
+                alt="Admin"
+              />
+            </div>
+            <div className="user-info">
+              <span className="user-name">Name_Admin</span>
+              <span className="user-role">Admin Principal</span>
+            </div>
           </div>
         </div>
-      </div>
-
-      <nav className="sidebar-nav">
-        {menuItems.map((item) => {
-          const Icon = item.icon;
-          return (
-            <button
-              key={item.id}
-              className={`nav-item ${activeTab === item.id ? 'active' : ''}`}
-              onClick={() => navigate(item.path)}
-            >
-              <Icon size={20} />
-              <span>{item.label}</span>
-            </button>
-          );
-        })}
-      </nav>
-
-      <div className="sidebar-footer">
-        <button className={`nav-item settings-btn ${activeTab === 'parametres' ? 'active' : ''}`} onClick={() => navigate('/parametres')}>
-          <Settings size={20} />
-          <span>Paramètres</span>
-        </button>
-        <div className="user-profile">
-          <div className="user-avatar">
-            <img
-              src="https://ui-avatars.com/api/?name=Admin&background=6c5ce7&color=fff&size=40"
-              alt="Admin"
-            />
-          </div>
-          <div className="user-info">
-            <span className="user-name">Name_Admin</span>
-            <span className="user-role">Admin Principal</span>
-          </div>
-        </div>
-      </div>
-    </aside>
+      </aside>
+    </>
   );
 }
 

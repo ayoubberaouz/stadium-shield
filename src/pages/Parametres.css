@@ -419,3 +419,25 @@ input:checked + .slider:before {
     justify-content: space-between;
   }
 }
+
+@media (max-width: 480px) {
+  .parametres-page {
+    padding: 20px 16px;
+  }
+
+  .parametres-header h1 {
+    font-size: 24px;
+  }
+
+  .parametres-content {
+    gap: 16px;
+  }
+
+  .config-card {
+    padding: 16px;
+  }
+
+  .form-row {
+    gap: 12px;
+  }
+}

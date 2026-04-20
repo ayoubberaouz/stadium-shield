@@ -132,3 +132,20 @@
   border-color: #6c5ce7;
   color: #6c5ce7;
 }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .cameras-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .camera-feeds-card {
+    padding: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .camera-feeds-card {
+    padding: 12px;
+  }
+}

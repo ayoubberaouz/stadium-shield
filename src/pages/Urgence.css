@@ -406,6 +406,28 @@
   }
 }
 
+@media (max-width: 480px) {
+  .urgence-page {
+    padding: 20px 16px;
+  }
+
+  .urgence-header h1 {
+    font-size: 24px;
+  }
+
+  .urgence-surveillance {
+    gap: 16px;
+  }
+
+  .urgence-activity {
+    gap: 16px;
+  }
+
+  .urgence-critical-alert {
+    padding: 16px;
+  }
+}
+
 .team-details {
   display: flex;
   gap: 20px;

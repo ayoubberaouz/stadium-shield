@@ -489,3 +489,21 @@
     grid-template-columns: 1fr;
   }
 }
+
+@media (max-width: 480px) {
+  .alertes-page {
+    padding: 20px 16px;
+  }
+
+  .alertes-header h1 {
+    font-size: 24px;
+  }
+
+  .alertes-stats-compact {
+    padding: 16px;
+  }
+
+  .alertes-bottom {
+    gap: 16px;
+  }
+}

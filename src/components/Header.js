@@ -1,11 +1,14 @@
 import React from 'react';
-import { Search, Bell, Settings, LogOut } from 'lucide-react';
+import { Search, Bell, Settings, LogOut, Menu } from 'lucide-react';
 import './Header.css';
 
-function Header() {
+function Header({ onToggleSidebar }) {
   return (
     <header className="header">
       <div className="header-left">
+        <button className="hamburger-btn" onClick={onToggleSidebar}>
+          <Menu size={20} />
+        </button>
         <h2 className="stadium-name">Stade Prince Moulay Abdellah</h2>
       </div>
       <div className="header-center">
