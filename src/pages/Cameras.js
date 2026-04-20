@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Grid3X3, List, Filter, X, Search as SearchIcon, Wifi, Eye, ZoomIn, ZoomOut, Circle, Maximize2, AlertTriangle, Zap } from 'lucide-react';
+import { Grid3X3, List, Filter, X, Wifi, ZoomIn, ZoomOut, Circle, Maximize2, AlertTriangle } from 'lucide-react';
 import './Cameras.css';
 
 const camerasData = [
@@ -171,13 +171,13 @@ function Cameras() {
 
           <div className="inspector-ai-card">
             <div className="inspector-ai-header">
-              <Zap size={16} />
+              <AlertTriangle size={16} />
               <span>ANALYSE AI SENTINEL</span>
             </div>
             <p>La densité de foule actuelle est dans les paramètres de sécurité (0,4 p/m²). Aucune anomalie détectée dans le flux d'entrée.</p>
             <div className="inspector-ai-score">
               <span>SCORE DE CONFIANCE : 98.4%</span>
-              <Zap size={14} />
+              <AlertTriangle size={14} />
             </div>
           </div>
         </div>

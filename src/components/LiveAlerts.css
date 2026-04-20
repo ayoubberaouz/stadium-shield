@@ -102,3 +102,29 @@
 .alert-item.info .alert-time {
   color: #6c5ce7;
 }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .live-alerts-card {
+    padding: 16px;
+  }
+
+  .alert-item {
+    padding: 10px;
+    gap: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .live-alerts-card {
+    padding: 12px;
+  }
+
+  .alert-title {
+    font-size: 12px;
+  }
+
+  .alert-desc {
+    font-size: 11px;
+  }
+}

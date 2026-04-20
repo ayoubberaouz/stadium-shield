@@ -316,3 +316,54 @@
   font-size: 12px;
   color: #888;
 }
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .stats-grid-surv {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .surveillance-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .surv-alerts-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .surveillance-page {
+    padding: 20px 16px;
+  }
+
+  .stats-grid-surv {
+    grid-template-columns: 1fr;
+  }
+
+  .surv-alerts-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .cartography-card {
+    padding: 16px;
+  }
+
+  .surv-alerts-feed {
+    padding: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .surveillance-page {
+    padding: 16px 12px;
+  }
+
+  .stat-card-surv {
+    padding: 16px 18px;
+  }
+
+  .zone-detail-stats {
+    grid-template-columns: 1fr;
+  }
+}

@@ -245,3 +245,45 @@
   margin-top: 28px;
   line-height: 1.6;
 }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .login-card {
+    padding: 36px 32px;
+    max-width: 380px;
+  }
+
+  .login-title {
+    font-size: 20px;
+  }
+
+  .login-subtitle {
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .login-card {
+    padding: 28px 24px;
+    max-width: 340px;
+  }
+
+  .login-logo-icon {
+    width: 48px;
+    height: 48px;
+  }
+
+  .login-input-wrapper {
+    padding: 10px 14px;
+  }
+
+  .login-footer {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .login-disclaimer {
+    font-size: 11px;
+    max-width: 320px;
+  }
+}

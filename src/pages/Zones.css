@@ -279,3 +279,63 @@
 .feed-dot.danger {
   background: #e74c3c;
 }
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .zones-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .zones-bottom {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .zones-page {
+    padding: 20px 16px;
+  }
+
+  .zones-page-header h1 {
+    font-size: 24px;
+  }
+
+  .zones-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .zone-card {
+    padding: 18px;
+  }
+
+  .zones-bottom {
+    gap: 16px;
+  }
+
+  .density-chart-card {
+    padding: 20px;
+  }
+
+  .live-alert-feed-card {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .zones-page {
+    padding: 16px 12px;
+  }
+
+  .zone-card-top h3 {
+    font-size: 16px;
+  }
+
+  .density-bars {
+    padding-top: 16px;
+  }
+
+  .live-feed-items {
+    gap: 12px;
+  }
+}

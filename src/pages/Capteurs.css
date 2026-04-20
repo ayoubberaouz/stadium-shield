@@ -462,3 +462,56 @@
   font-size: 11px;
   font-weight: 700;
 }
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .sensors-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .capteurs-charts {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .capteurs-page {
+    padding: 20px 16px;
+  }
+
+  .capteurs-header h1 {
+    font-size: 24px;
+  }
+
+  .sensors-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .sensor-card {
+    padding: 16px;
+  }
+
+  .capteurs-charts {
+    gap: 16px;
+  }
+
+  .chart-card {
+    padding: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .capteurs-page {
+    padding: 16px 12px;
+  }
+
+  .sensor-value {
+    font-size: 28px;
+  }
+
+  .smoke-zone-name {
+    width: 100px;
+    font-size: 12px;
+  }
+}

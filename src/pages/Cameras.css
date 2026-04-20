@@ -198,6 +198,49 @@
   align-items: center;
 }
 
+/* Responsive */
+@media (max-width: 1024px) {
+  .cameras-content {
+    padding: 24px 24px;
+  }
+
+  .cameras-grid-main {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .cameras-content {
+    padding: 20px 16px;
+  }
+
+  .cameras-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .cameras-header h1 {
+    font-size: 24px;
+  }
+
+  .cameras-toolbar {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
+@media (max-width: 480px) {
+  .cameras-content {
+    padding: 16px 12px;
+  }
+
+  .camera-card-main {
+    padding: 14px;
+  }
+}
+
 .camera-update {
   font-size: 10px;
   font-weight: 700;

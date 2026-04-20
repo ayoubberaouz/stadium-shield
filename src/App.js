@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import Sidebar from './components/Sidebar';
 import Header from './components/Header';
@@ -16,6 +16,7 @@ import './App.css';
 
 function AppLayout() {
   const location = useLocation();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   // Map route paths to sidebar tab ids
   const pathToTab = {
@@ -32,11 +33,15 @@ function AppLayout() {
 
   const activeTab = pathToTab[location.pathname] || 'dashboard';
 
+  const toggleSidebar = () => {
+    setSidebarOpen(!sidebarOpen);
+  };
+
   return (
     <div className="app">
-      <Sidebar activeTab={activeTab} />
+      <Sidebar activeTab={activeTab} isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
       <div className="main-content">
-        <Header />
+        <Header onToggleSidebar={toggleSidebar} />
         <Routes>
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/surveillance" element={<Surveillance />} />
