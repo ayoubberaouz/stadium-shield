@@ -51,7 +51,6 @@ function Rapports() {
 
   return (
     <div className="rapports-page">
-      {/* Header */}
       <div className="rapport-dashboard-header">
         <div>
           <h1>Tableau de bord des Rapports et Analyses</h1>
