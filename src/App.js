@@ -7,11 +7,9 @@ import Login from './pages/Login';
 import Surveillance from './pages/Surveillance';
 import Zones from './pages/Zones';
 import Cameras from './pages/Cameras';
-import Capteurs from './pages/Capteurs';
 import Alertes from './pages/Alertes';
 import Urgence from './pages/Urgence';
-import Rapports from './pages/Rapports';
-import Parametres from './pages/Parametres';
+import Intervention from './pages/Intervention';
 import './App.css';
 
 function AppLayout() {
@@ -24,11 +22,8 @@ function AppLayout() {
     '/surveillance': 'surveillance',
     '/zones': 'zones',
     '/cameras': 'cameras',
-    '/capteurs': 'capteurs',
     '/alertes': 'alertes',
     '/urgence': 'urgence',
-    '/rapports': 'rapports',
-    '/parametres': 'parametres',
   };
 
   const activeTab = pathToTab[location.pathname] || 'dashboard';
@@ -47,11 +42,8 @@ function AppLayout() {
           <Route path="/surveillance" element={<Surveillance />} />
           <Route path="/zones" element={<Zones />} />
           <Route path="/cameras" element={<Cameras />} />
-          <Route path="/capteurs" element={<Capteurs />} />
           <Route path="/alertes" element={<Alertes />} />
           <Route path="/urgence" element={<Urgence />} />
-          <Route path="/rapports" element={<Rapports />} />
-          <Route path="/parametres" element={<Parametres />} />
           <Route path="*" element={<Navigate to="/dashboard" replace />} />
         </Routes>
       </div>
@@ -64,6 +56,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/login" element={<Login />} />
+        <Route path="/intervention" element={<Intervention />} />
         <Route path="/*" element={<AppLayout />} />
       </Routes>
     </Router>

@@ -1,9 +1,82 @@
-import React, { useState } from 'react';
-import { Plus, Minus, Layers, Fan, Thermometer, Wind } from 'lucide-react';
+import React, { useState, useMemo, useEffect } from 'react';
+import { Plus, Minus, Layers, Fan, Thermometer, Wind, Users } from 'lucide-react';
 import './StadiumMap.css';
 
-function StadiumMap() {
+function StadiumMap({ alerts = [] }) {
   const [zoom, setZoom] = useState(1);
+  const [showPoints, setShowPoints] = useState(false);
+  const [currentTime, setCurrentTime] = useState(Date.now());
+  const [inspectionData, setInspectionData] = useState({ active: false, states: {} });
+
+  useEffect(() => {
+    const fetchStatus = () => {
+      fetch('http://localhost:5000/api/inspection_status')
+        .then(res => res.json())
+        .then(data => setInspectionData(data))
+        .catch(() => {});
+    };
+
+    fetchStatus(); // initial fetch
+    const timer = setInterval(() => {
+      setCurrentTime(Date.now());
+      fetchStatus();
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  // Generate random fan coordinates for realism
+  const fans = useMemo(() => {
+    const points = [];
+    // Zone NORD (CAM-1)
+    for(let i=0; i<300; i++) points.push({ id: `n${i}`, zone: 'CAM-1', x: 200 + Math.random()*300, y: 70 + Math.random()*60 });
+    // Zone EST (CAM-2)
+    for(let i=0; i<150; i++) points.push({ id: `e${i}`, zone: 'CAM-2', x: 550 + Math.random()*70, y: 130 + Math.random()*220 });
+    // Zone OUEST (CAM-3) 
+    for(let i=0; i<160; i++) points.push({ id: `w${i}`, zone: 'CAM-3', x: 80 + Math.random()*70, y: 130 + Math.random()*220 });
+    // Zone SUD (CAM-4) - We don't have CAM-4 explicitely assigned but we add it for layout
+    for(let i=0; i<320; i++) points.push({ id: `s${i}`, zone: 'CAM-4', x: 200 + Math.random()*300, y: 350 + Math.random()*60 });
+    return points;
+  }, []);
+
+  // Determine active alerts and map to specific camera anchors
+  const activeAlerts = useMemo(() => {
+    const recentAlerts = alerts.filter(a => {
+      if (a.status !== 'new' && a.status !== 'in_progress') return false;
+      const alertTime = new Date(a.timestamp).getTime();
+      if ((currentTime - alertTime) >= 35000) return false; // Must be recent
+
+      // If camera is paused, hide its red dot immediately
+      const isCamActive = inspectionData.states[a.camera_id] !== undefined
+        ? inspectionData.states[a.camera_id]
+        : inspectionData.active;
+        
+      return isCamActive;
+    });
+    
+    // Group by camera_id so we only draw one dot per camera
+    const uniqueByCamera = [];
+    const seenCams = new Set();
+    
+    recentAlerts.forEach(alert => {
+      if (!seenCams.has(alert.camera_id)) {
+        seenCams.add(alert.camera_id);
+        uniqueByCamera.push(alert);
+      }
+    });
+    return uniqueByCamera;
+  }, [alerts, currentTime, inspectionData]);
+
+  const alertZones = activeAlerts.map(a => a.camera_id);
+
+  const getAlertAnchor = (camId) => {
+    switch (camId) {
+      case 'CAM-1': return { x: 350, y: 100, zoneName: "Tribune Nord" };
+      case 'CAM-2': return { x: 585, y: 240, zoneName: "Tribune Est" };
+      case 'CAM-3': return { x: 115, y: 240, zoneName: "Tribune Ouest" };
+      case 'CAM-4': return { x: 350, y: 380, zoneName: "Tribune Sud" };
+      default: return null;
+    }
+  };
 
   return (
     <div className="stadium-map-card">
@@ -17,10 +90,12 @@ function StadiumMap() {
           </button>
         </div>
 
-        <button className="layers-btn">
-          <Layers size={14} />
-          <span>COUCHES</span>
-        </button>
+        <div className="map-toolbar">
+          <button className={`layers-btn ${showPoints ? 'active' : ''}`} onClick={() => setShowPoints(!showPoints)}>
+            <Users size={14} />
+            <span>MODE POINTS FANS</span>
+          </button>
+        </div>
 
         <div className="stadium-svg-wrapper" style={{ transform: `scale(${zoom})` }}>
           <svg viewBox="0 0 700 480" className="stadium-svg">
@@ -175,60 +250,91 @@ function StadiumMap() {
             <rect x="85" y="399" width="6" height="6" rx="1" fill="#5a7a9a" opacity="0.6" />
             <rect x="609" y="399" width="6" height="6" rx="1" fill="#5a7a9a" opacity="0.6" />
 
-            {/* Alert dot - red pulsing */}
-            <circle cx="420" cy="170" r="6" fill="#e74c3c">
-              <animate attributeName="opacity" values="1;0.4;1" dur="2s" repeatCount="indefinite" />
-            </circle>
-            <circle cx="420" cy="170" r="12" fill="none" stroke="#e74c3c" strokeWidth="1.5" opacity="0.4">
-              <animate attributeName="r" values="12;20;12" dur="2s" repeatCount="indefinite" />
-              <animate attributeName="opacity" values="0.4;0;0.4" dur="2s" repeatCount="indefinite" />
-            </circle>
+            {/* FANS (POINTS MODE) */}
+            {showPoints && fans.map(fan => {
+              // Si la zone est en alerte, créer un cluster rouge (heatmap feeling) vers le centre de l'anomalie
+              const isAlertZone = alertZones.includes(fan.zone);
+              const anchor = getAlertAnchor(fan.zone);
+              let color = "rgba(41, 128, 185, 0.4)"; // Default blue/gray fan
 
-            {/* Sensor dots */}
-            <circle cx="280" cy="380" r="5" fill="#3b82f6" opacity="0.9">
-              <animate attributeName="opacity" values="0.9;0.5;0.9" dur="3s" repeatCount="indefinite" />
-            </circle>
-            <circle cx="480" cy="340" r="5" fill="#3b82f6" opacity="0.9">
-              <animate attributeName="opacity" values="0.9;0.5;0.9" dur="3.5s" repeatCount="indefinite" />
-            </circle>
-            <circle cx="200" cy="200" r="4" fill="#22c55e" opacity="0.8" />
-            <circle cx="510" cy="280" r="4" fill="#22c55e" opacity="0.8" />
+              // Make fans near the alert center glow red
+              if (isAlertZone && anchor) {
+                const dist = Math.hypot(fan.x - anchor.x, fan.y - anchor.y);
+                if (dist < 35) {
+                   color = "rgba(231, 76, 60, 0.9)"; // Red
+                } else if (dist < 60) {
+                   color = "rgba(230, 126, 34, 0.7)"; // Orange
+                }
+              }
+
+              return <circle key={fan.id} cx={fan.x} cy={fan.y} r={1.2} fill={color} />;
+            })}
+
+            {/* DYNAMIC ALERT RENDERING (Red pulsing dot) */}
+            {activeAlerts.map(alert => {
+              const anchor = getAlertAnchor(alert.camera_id);
+              if (!anchor) return null;
+              
+              return (
+                <g key={alert._id}>
+                  {/* Central solid dot */}
+                  <circle cx={anchor.x} cy={anchor.y} r="6" fill="#e74c3c">
+                    <animate attributeName="opacity" values="1;0.4;1" dur="2s" repeatCount="indefinite" />
+                  </circle>
+                  {/* Outer pulse */}
+                  <circle cx={anchor.x} cy={anchor.y} r="18" fill="none" stroke="#e74c3c" strokeWidth="1.5" opacity="0.4">
+                    <animate attributeName="r" values="10;30;10" dur="2s" repeatCount="indefinite" />
+                    <animate attributeName="opacity" values="0.6;0;0.6" dur="2s" repeatCount="indefinite" />
+                  </circle>
+                </g>
+              );
+            })}
+
           </svg>
         </div>
 
-        {/* Alert Banner */}
-        <div className="map-alert-banner">
-          <div className="alert-dot-pulse"></div>
-          <div className="alert-banner-content">
-            <div className="alert-banner-title">ALERTE ZONE B-14</div>
-            <div className="alert-banner-text">
-              Forte concentration de CO2 détectée dans le hall sud. Ventilateurs 88-92 réglés sur extraction max.
+        {/* Dynamic Alert Banner based on Real Data */}
+        {activeAlerts.length > 0 ? (
+          activeAlerts.map((alert, index) => {
+            const anchor = getAlertAnchor(alert.camera_id);
+            if (index > 0) return null; // Show only the first alert banner on top of map
+            return (
+              <div key={`banner-${alert._id}`} className="map-alert-banner">
+                <div className="alert-dot-pulse"></div>
+                <div className="alert-banner-content">
+                  <div className="alert-banner-title">ALERTE {anchor ? anchor.zoneName.toUpperCase() : alert.camera_id}</div>
+                  <div className="alert-banner-text">
+                    INCIDENT ({alert.weapon_type.toUpperCase()}) DÉTECTÉ SUR {alert.camera_id}. Le protocole de sécurité est recommandé. Focus vidéo activé.
+                  </div>
+                </div>
+                <div className="alert-banner-stats">
+                  <div className="alert-stat">
+                    <Users size={14} />
+                    <div>
+                      <span className="alert-stat-label">DENSITÉ</span>
+                      <span className="alert-stat-value">ELEVÉE</span>
+                    </div>
+                  </div>
+                  <div className="alert-stat">
+                    <Thermometer size={14} />
+                    <div>
+                      <span className="alert-stat-label">RISQUE</span>
+                      <span className="alert-stat-value">CRITIQUE</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          })
+        ) : (
+          <div className="map-alert-banner" style={{background: 'rgba(39, 174, 96, 0.9)'}}>
+            <div className="alert-dot-pulse" style={{backgroundColor: '#fff', animation: 'none'}}></div>
+            <div className="alert-banner-content">
+               <div className="alert-banner-title" style={{color: '#fff'}}>SYSTÈME DÉGAGÉ</div>
+               <div className="alert-banner-text" style={{color: '#e0e0e0'}}>Aucun incident actif dans les zones de surveillance.</div>
             </div>
           </div>
-          <div className="alert-banner-stats">
-            <div className="alert-stat">
-              <Fan size={14} />
-              <div>
-                <span className="alert-stat-label">FANS</span>
-                <span className="alert-stat-value">92%</span>
-              </div>
-            </div>
-            <div className="alert-stat">
-              <Wind size={14} />
-              <div>
-                <span className="alert-stat-label">O2</span>
-                <span className="alert-stat-value">20.9%</span>
-              </div>
-            </div>
-            <div className="alert-stat">
-              <Thermometer size={14} />
-              <div>
-                <span className="alert-stat-label">TEMP</span>
-                <span className="alert-stat-value">23°C</span>
-              </div>
-            </div>
-          </div>
-        </div>
+        )}
       </div>
     </div>
   );

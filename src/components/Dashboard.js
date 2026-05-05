@@ -1,59 +1,76 @@
 import React from 'react';
-import { Users, Radio, AlertTriangle, CheckCircle } from 'lucide-react';
+import { Radio, AlertTriangle, CheckCircle, ShieldAlert } from 'lucide-react';
 import StadiumMap from './StadiumMap';
 import LiveAlerts from './LiveAlerts';
 import CameraFeeds from './CameraFeeds';
+import { useAlerts, useAlertStats } from '../useAlerts';
 import './Dashboard.css';
 
-const stats = [
-  {
-    id: 'supporters',
-    label: 'TOTAL SUPPORTERS',
-    value: '1 248',
-    subtitle: '12% depuis l\'heure derni\u00e8re',
-    subtitleUp: true,
-    icon: Users,
-    color: '#6c5ce7',
-    bgColor: '#f8f7ff',
-  },
-  {
-    id: 'capteurs',
-    label: 'CAPTEURS ACTIFS',
-    value: '4 892',
-    subtitle: 'Disponibilit\u00e9 de 99,8%',
-    icon: Radio,
-    color: '#6c5ce7',
-    bgColor: '#f8f7ff',
-  },
-  {
-    id: 'alertes',
-    label: 'ALERTES OUVERTES',
-    value: '03',
-    subtitle: 'Action imm\u00e9diate requise',
-    icon: AlertTriangle,
-    color: '#e74c3c',
-    bgColor: '#fef2f2',
-    isAlert: true,
-  },
-  {
-    id: 'statut',
-    label: 'STATUT SYST\u00c8ME',
-    value: 'D\u00c9GAG\u00c9',
-    subtitle: 'Aucun danger d\u00e9tect\u00e9',
-    icon: CheckCircle,
-    color: '#27ae60',
-    bgColor: '#f0fdf4',
-    isSuccess: true,
-  },
-];
-
 function Dashboard() {
+  const { alerts, loading, error } = useAlerts(3000);
+  const stats = useAlertStats(alerts);
+
+  // Determine system status based on live data
+  const hasNewAlerts = stats.newAlerts > 0;
+  const systemStatus = hasNewAlerts ? 'ALERTE' : 'DÉGAGÉ';
+  const systemSubtitle = hasNewAlerts
+    ? `${stats.newAlerts} nouvelle(s) détection(s)`
+    : 'Aucun danger détecté';
+
+  const dashboardStats = [
+    {
+      id: 'total',
+      label: 'TOTAL INCIDENTS',
+      value: loading ? '...' : String(stats.totalAlerts).padStart(2, '0'),
+      subtitle: `${stats.gunAlerts} arme(s) · ${stats.knifeAlerts} couteau(x) · ${stats.violenceAlerts} violence`,
+      subtitleUp: false,
+      icon: ShieldAlert,
+      color: '#6c5ce7',
+      bgColor: '#f8f7ff',
+    },
+    {
+      id: 'capteurs',
+      label: 'CAPTEURS ACTIFS',
+      value: '4 892',
+      subtitle: 'Disponibilité de 99,8%',
+      icon: Radio,
+      color: '#6c5ce7',
+      bgColor: '#f8f7ff',
+    },
+    {
+      id: 'alertes',
+      label: 'ALERTES OUVERTES',
+      value: loading ? '...' : String(stats.newAlerts).padStart(2, '0'),
+      subtitle: stats.newAlerts > 0 ? 'Action immédiate requise' : 'Aucune alerte ouverte',
+      icon: AlertTriangle,
+      color: '#e74c3c',
+      bgColor: '#fef2f2',
+      isAlert: stats.newAlerts > 0,
+    },
+    {
+      id: 'statut',
+      label: 'STATUT SYSTÈME',
+      value: loading ? '...' : systemStatus,
+      subtitle: systemSubtitle,
+      icon: hasNewAlerts ? AlertTriangle : CheckCircle,
+      color: hasNewAlerts ? '#e74c3c' : '#27ae60',
+      bgColor: hasNewAlerts ? '#fef2f2' : '#f0fdf4',
+      isSuccess: !hasNewAlerts,
+      isAlert: hasNewAlerts,
+    },
+  ];
+
   return (
     <div className="dashboard">
       <div className="dashboard-top">
         <div className="dashboard-title-section">
           <h1>Vue d'ensemble du système</h1>
           <p>Surveillance de sécurité en temps réel pour le Complexe du Stade Nord</p>
+          {error && (
+            <span className="backend-error-badge">
+              ⚠ Backend hors ligne — données en cache
+            </span>
+          )}
         </div>
         <div className="dashboard-actions">
           <button className="btn btn-secondary">Générer un rapport</button>
@@ -62,7 +79,7 @@ function Dashboard() {
       </div>
 
       <div className="stats-grid">
-        {stats.map((stat) => {
+        {dashboardStats.map((stat) => {
           const Icon = stat.icon;
           return (
             <div
@@ -89,10 +106,10 @@ function Dashboard() {
 
       <div className="dashboard-grid">
         <div className="dashboard-main">
-          <StadiumMap />
+          <StadiumMap alerts={alerts} />
         </div>
         <div className="dashboard-side">
-          <LiveAlerts />
+          <LiveAlerts alerts={alerts} loading={loading} />
           <CameraFeeds />
         </div>
       </div>

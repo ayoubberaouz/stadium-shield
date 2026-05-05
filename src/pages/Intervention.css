@@ -1,0 +1,104 @@
+.intervention-page {
+  padding: 20px;
+  background-color: #0f0f1a;
+  min-height: 100vh;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.intervention-header {
+  text-align: center;
+  margin-bottom: 30px;
+  margin-top: 20px;
+}
+
+.intervention-header h1 {
+  color: #fff;
+  font-size: 2rem;
+  margin-bottom: 5px;
+}
+
+.intervention-header p {
+  color: #999;
+}
+
+.intervention-card {
+  background: #1a1a2e;
+  border-radius: 12px;
+  padding: 24px;
+  width: 100%;
+  max-width: 600px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  border: 1px solid #2d2d44;
+}
+
+.intervention-empty {
+  text-align: center;
+  padding: 50px 20px;
+}
+
+.intervention-empty h2 {
+  color: #27ae60;
+  margin-top: 15px;
+}
+
+.intervention-details {
+  margin-bottom: 24px;
+}
+
+.intervention-details h2 {
+  color: #e74c3c;
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.intervention-image {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  border: 2px solid #e74c3c;
+}
+
+.intervention-info-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid #2d2d44;
+  font-size: 1.1rem;
+}
+
+.intervention-info-row span:first-child {
+  color: #999;
+}
+
+.intervention-info-row span:last-child {
+  font-weight: bold;
+}
+
+.finish-btn {
+  width: 100%;
+  background: #27ae60;
+  color: white;
+  border: none;
+  padding: 20px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: background 0.3s;
+}
+
+.finish-btn:hover {
+  background: #219653;
+}

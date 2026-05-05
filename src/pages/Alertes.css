@@ -168,8 +168,9 @@
   background: white;
   border-radius: 12px;
   border: 1px solid #e8e8ef;
-  overflow: hidden;
+  overflow-x: auto;
   margin-bottom: 24px;
+  -webkit-overflow-scrolling: touch;
 }
 
 .alertes-table {
@@ -506,4 +507,170 @@
   .alertes-bottom {
     gap: 16px;
   }
+}
+
+/* Backend error badge */
+.backend-error-inline {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 4px 12px;
+  border-radius: 6px;
+  background: #fef2f2;
+  color: #e74c3c;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+/* Loading state */
+.alertes-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 2rem;
+  color: #888;
+  gap: 12px;
+}
+
+.alertes-loading p {
+  font-size: 13px;
+}
+
+/* Empty state */
+.alertes-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 2rem;
+  text-align: center;
+}
+
+.alertes-empty p:first-child {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #27ae60;
+}
+
+/* Spinner keyframe */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+}
+
+/* ============================================
+   Evidence Modal
+   ============================================ */
+.evidence-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(6px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.evidence-modal {
+  background: white;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 680px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.25);
+  animation: slideUp 0.25s ease;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.evidence-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid #e8e8ef;
+}
+
+.evidence-modal-header h3 {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1a1a2e;
+}
+
+.evidence-close-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  border: 1px solid #e8e8ef;
+  background: white;
+  color: #666;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.evidence-close-btn:hover {
+  background: #fef2f2;
+  color: #e74c3c;
+  border-color: #e74c3c;
+}
+
+.evidence-modal-body {
+  padding: 24px;
+}
+
+.evidence-image {
+  width: 100%;
+  border-radius: 12px;
+  border: 2px solid #e8e8ef;
+  margin-bottom: 20px;
+  object-fit: contain;
+  max-height: 380px;
+  background: #1a1a2e;
+}
+
+.evidence-details {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.evidence-detail-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.evidence-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  color: #888;
+}
+
+.evidence-value {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1a1a2e;
 }

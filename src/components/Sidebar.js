@@ -20,10 +20,8 @@ const menuItems = [
   { id: 'surveillance', label: 'Surveillance', icon: Eye, path: '/surveillance' },
   { id: 'zones', label: 'Zones', icon: Map, path: '/zones' },
   { id: 'cameras', label: 'Caméras', icon: Camera, path: '/cameras' },
-  { id: 'capteurs', label: 'Capteurs', icon: Radio, path: '/capteurs' },
   { id: 'alertes', label: 'Alertes', icon: Bell, path: '/alertes' },
   { id: 'urgence', label: 'Urgence', icon: AlertTriangle, path: '/urgence' },
-  { id: 'rapports', label: 'Rapports', icon: FileText, path: '/rapports' },
 ];
 
 function Sidebar({ activeTab, isOpen, onClose }) {
@@ -70,11 +68,7 @@ function Sidebar({ activeTab, isOpen, onClose }) {
           })}
         </nav>
 
-        <div className="sidebar-footer">
-          <button className={`nav-item settings-btn ${activeTab === 'parametres' ? 'active' : ''}`} onClick={() => handleNavClick('/parametres')}>
-            <Settings size={20} />
-            <span>Paramètres</span>
-          </button>
+        <div className="sidebar-footer" style={{ padding: '20px 16px', borderTop: '1px solid #2d2d44', marginTop: 'auto' }}>
           <div className="user-profile">
             <div className="user-avatar">
               <img
