@@ -287,7 +287,7 @@ function Surveillance() {
                       {alert.image_path && (
                         <div className="surv-alert-screenshot">
                           <img 
-                            src={`http://localhost:5000/evidence/${alert.image_path}`} 
+                            src={`http://${window.location.hostname}:5000/evidence/${alert.image_path}`} 
                             alt="Incident Evidence" 
                             className="surv-evidence-img"
                           />

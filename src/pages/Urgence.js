@@ -160,7 +160,7 @@ function Urgence() {
             <span className="thermal-subtitle">{worstAlert ? 'Détection IA' : 'Surveillance continue'}</span>
           </div>
           <div className="thermal-image" style={{ 
-            background: worstAlert && worstAlert.image_path ? `url(http://localhost:5000/evidence/${worstAlert.image_path}) center/cover no-repeat` : '#1a1a2e' 
+            background: worstAlert && worstAlert.image_path ? `url(http://${window.location.hostname}:5000/evidence/${worstAlert.image_path}) center/cover no-repeat` : '#1a1a2e' 
           }}>
             <div className="thermal-content" style={{ background: worstAlert ? 'rgba(0,0,0,0.7)' : 'rgba(39, 174, 96, 0.8)' }}>
               <span className="temp-display" style={{ fontSize: '1.5rem', color: worstLevel === 2 ? '#e74c3c' : worstLevel === 1 ? '#f59e0b' : '#fff' }}>

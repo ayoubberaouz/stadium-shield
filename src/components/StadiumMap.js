@@ -10,7 +10,7 @@ function StadiumMap({ alerts = [] }) {
 
   useEffect(() => {
     const fetchStatus = () => {
-      fetch('http://localhost:5000/api/inspection_status')
+      fetch(`http://${window.location.hostname}:5000/api/inspection_status`)
         .then(res => res.json())
         .then(data => setInspectionData(data))
         .catch(() => {});

@@ -3,7 +3,7 @@
 // Connects the React frontend to the Flask + MongoDB backend
 // ============================================================
 
-const API_BASE = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+const API_BASE = process.env.REACT_APP_API_URL || `http://${window.location.hostname}:5000`;
 
 /**
  * Fetch all alerts from the backend (sorted newest-first by the server).

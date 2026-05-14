@@ -19,7 +19,7 @@ function Cameras() {
 
   // Fetch initial state from backend on mount
   useEffect(() => {
-    fetch('http://localhost:5000/api/inspection_status')
+    fetch(`http://${window.location.hostname}:5000/api/inspection_status`)
       .then(res => res.json())
       .then(data => {
         setGlobalInspecting(data.active);
@@ -36,7 +36,7 @@ function Cameras() {
   // Sync inspection state with Backend
   const toggleInspectionState = async (camId, newState) => {
     try {
-      await fetch('http://localhost:5000/api/inspection_status', {
+      await fetch(`http://${window.location.hostname}:5000/api/inspection_status`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ active: newState, camera_id: camId })
@@ -188,7 +188,7 @@ function Cameras() {
                 </div>
               ) : (
                 <img 
-                  src={`http://localhost:5000/api/video_feed/${selectedCam}`} 
+                  src={`http://${window.location.hostname}:5000/api/video_feed/${selectedCam}`} 
                   alt={`Flux en direct ${selectedCam}`} 
                   style={{ width: '100%', height: 'auto', display: 'block', minHeight: '220px', objectFit: 'cover' }}
                 />

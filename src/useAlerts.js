@@ -30,7 +30,7 @@ export function useAlerts() {
     refetch();
 
     // Connect to WebSocket server
-    const socket = io('http://localhost:5000');
+    const socket = io(`http://${window.location.hostname}:5000`);
 
     socket.on('new_alert', (alert) => {
       setAlerts((prev) => [alert, ...prev]);
