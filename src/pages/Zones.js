@@ -28,11 +28,32 @@ const densityData = [
 function Zones() {
   const { alerts } = useAlerts(3000);
   const [currentTime, setCurrentTime] = useState(Date.now());
+  const [inspectionStates, setInspectionStates] = useState({});
   const maxBar = 100;
 
   useEffect(() => {
     const timer = setInterval(() => setCurrentTime(Date.now()), 1000);
     return () => clearInterval(timer);
+  }, []);
+
+  useEffect(() => {
+    const fetchStates = async () => {
+      try {
+        const res = await fetch(`http://${window.location.hostname}:5000/api/inspection_status`);
+        const data = await res.json();
+        const newStates = {};
+        ['CAM-1', 'CAM-2', 'CAM-3', 'CAM-115'].forEach(cId => {
+           newStates[cId] = data.states[cId] !== undefined ? data.states[cId] : data.active;
+        });
+        setInspectionStates(newStates);
+      } catch(err) {
+        console.error("Failed to fetch inspection states:", err);
+      }
+    };
+    
+    fetchStates();
+    const interval = setInterval(fetchStates, 2000);
+    return () => clearInterval(interval);
   }, []);
 
   const zoneMap = {
@@ -49,6 +70,10 @@ function Zones() {
   const getZoneStatus = (zoneNum) => {
     const camId = zoneMap[zoneNum];
     if (!camId) return null;
+
+    if (inspectionStates[camId] === false) {
+      return null;
+    }
 
     const recentAlertsForCam = alerts.filter(a => {
       if (a.status !== 'new' && a.status !== 'in_progress') return false;
